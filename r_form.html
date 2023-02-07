@@ -32,25 +32,32 @@
   </body>
   <script>
     document.querySelector('#booking-form').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const formData = {
-        name: document.querySelector('#name').value,
-        email: document.querySelector('#email').value,
-        phone: document.querySelector('#phone').value,
-        time: document.querySelector('#time').value,
-    };
-        console.log(formData);
-    });
-    document.querySelector('#booking-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        const formData = {
-          name: document.querySelector('#name').value,
-          email: document.querySelector('#email').value,
-          phone: document.querySelector('#phone').value,
-          time: document.querySelector('#time').value
-        };
-        localStorage.setItem("user", JSON.stringify(formData));
-      });
+          event.preventDefault();
+          const formData = {
+            name: document.querySelector('#name').value,
+            email: document.querySelector('#email').value,
+            phone: document.querySelector('#phone').value,
+            time: document.querySelector('#time').value
+          };
+          localStorage.setItem("user", JSON.stringify(formData));
+          displayData(formData);
+        });
+
+      function displayData(userData) {
+        const dataContainer = document.createElement("div");
+        dataContainer.innerHTML = `
+          <p><b>Name:</b> ${userData.name}</p>
+          <p><b>Email:</b> ${userData.email}</p>
+          <p><b>Phone:</b> ${userData.phone}</p>
+          <p><b>Time:</b> ${userData.time}</p>
+          <button id="delete-button">Delete</button>
+        `;
+        document.querySelector(".container").appendChild(dataContainer);
+        document.querySelector("#delete-button").addEventListener("click", () => {
+          dataContainer.remove();
+          localStorage.removeItem("user");
+        });
+      }
 
 </script>
 
