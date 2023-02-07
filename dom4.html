@@ -494,14 +494,13 @@
         }
 
         const form = document.getElementById('my-form');
-        const nameInput1 = document.getElementById('name');
-        const emailInput1 = document.getElementById('email');
+        
         
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const name = nameInput1.value;
-            const email = emailInput1.value;
+            const name = nameInput.value;
+            const email = emailInput.value;
 
             if (!name || !email) {
                 // display error message
@@ -509,10 +508,13 @@
             }
 
             const user = { name, email };
+            
             let users = JSON.parse(localStorage.getItem('users')) || [];
             users.push(user);
-
             localStorage.setItem('users', JSON.stringify(users));
+            console.log(users);
+
+            
 
             // clear form inputs
             nameInput1.value = '';
