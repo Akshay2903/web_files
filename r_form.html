@@ -41,6 +41,17 @@
     };
         console.log(formData);
     });
+    document.querySelector('#booking-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = {
+          name: document.querySelector('#name').value,
+          email: document.querySelector('#email').value,
+          phone: document.querySelector('#phone').value,
+          time: document.querySelector('#time').value
+        };
+        localStorage.setItem("user", JSON.stringify(formData));
+      });
+
 </script>
 
 </html>
