@@ -43,21 +43,41 @@
           displayData(formData);
         });
 
-      function displayData(userData) {
-        const dataContainer = document.createElement("div");
-        dataContainer.innerHTML = `
-          <p><b>Name:</b> ${userData.name}</p>
-          <p><b>Email:</b> ${userData.email}</p>
-          <p><b>Phone:</b> ${userData.phone}</p>
-          <p><b>Time:</b> ${userData.time}</p>
-          <button id="delete-button">Delete</button>
-        `;
-        document.querySelector(".container").appendChild(dataContainer);
-        document.querySelector("#delete-button").addEventListener("click", () => {
-          dataContainer.remove();
-          localStorage.removeItem("user");
-        });
-      }
+        function displayData(userData) {
+            const previousDataContainer = document.querySelector('.container div');
+            if (previousDataContainer) {
+              previousDataContainer.remove();
+            }
+
+            const dataContainer = document.createElement("div");
+            dataContainer.innerHTML = `
+              <p><b>Name:</b> ${userData.name}</p>
+              <p><b>Email:</b> ${userData.email}</p>
+              <p><b>Phone:</b> ${userData.phone}</p>
+              <p><b>Time:</b> ${userData.time}</p>
+              <button id="edit-button">Edit</button>
+              <button id="delete-button">Delete</button>
+            `;
+            document.querySelector(".container").appendChild(dataContainer);
+
+            document.querySelector("#edit-button").addEventListener("click", () => {
+              // Remove previous data
+              dataContainer.remove();
+              localStorage.removeItem("user");
+
+              // Add the user data to the form inputs
+              document.querySelector('#name').value = userData.name;
+              document.querySelector('#email').value = userData.email;
+              document.querySelector('#phone').value = userData.phone;
+              document.querySelector('#time').value = userData.time;
+            });
+
+            document.querySelector("#delete-button").addEventListener("click", () => {
+              dataContainer.remove();
+              localStorage.removeItem("user");
+            });
+          }
+
 
 </script>
 
