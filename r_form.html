@@ -164,6 +164,61 @@
                 });
             });
    }
+   document.querySelector('#edit-button').addEventListener('click', () => {
+        // Change the form button to update instead of submit
+        const submitButton = document.querySelector('button[type="submit"]');
+        submitButton.textContent = 'Update';
+        submitButton.setAttribute('data-action', 'update');
+
+        // Populate the form fields with the current user data
+        const nameElement = document.querySelector('#name');
+        nameElement.value = userDetails.name;
+
+        const emailElement = document.querySelector('#email');
+        emailElement.value = userDetails.email;
+
+        const phoneElement = document.querySelector('#phone');
+        phoneElement.value = userDetails.phone;
+
+        const timeElement = document.querySelector('#time');
+        timeElement.value = userDetails.time;
+      });
+
+// Handle form submit for updating an existing appointment
+    document.querySelector('#booking-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const submitButton = document.querySelector('button[type="submit"]');
+      const action = submitButton.getAttribute('data-action');
+
+      if (action === 'update') {
+        // Make a PUT request to update the appointment
+        const formData = {
+          name: document.querySelector('#name').value,
+          email: document.querySelector('#email').value,
+          phone: document.querySelector('#phone').value,
+          time: document.querySelector('#time').value
+        };
+
+        axios.put(`https://crudcrud.com/api/037f3cf39e4049adba586fcb0216204d/bookingAppointments/${userDetails._id}`, formData)
+          .then(response => {
+            console.log(response.data);
+
+            // Update the user details and display them on the page
+            userDetails = response.data;
+            displayData(userDetails);
+
+            // Reset the form and change the button back to submit
+            document.querySelector('#booking-form').reset();
+            submitButton.textContent = 'Submit';
+            submitButton.removeAttribute('data-action');
+          })
+          .catch(error => {
+            console.log(error);
+          });
+  }
+});
+
 
 
 
