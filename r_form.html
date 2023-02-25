@@ -23,8 +23,8 @@
         </div>
         <div class="form-group">
           <label for="time">Time for call</label>
-          <input type="date" class="form-control" id="date" >
-          <input type="time" class="form-control" id="time">
+          <input type="date" class="form-control" id="datetime" >
+          <input type="time" class="form-control" id="datetime">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -32,25 +32,51 @@
   </body>
   <script src = "https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
   <script>
-    document.querySelector('#booking-form').addEventListener('submit', (event) => {
-          event.preventDefault();
-          const formData = {
-            name: document.querySelector('#name').value,
-            email: document.querySelector('#email').value,
-            phone: document.querySelector('#phone').value,
-            time: document.querySelector('#time').value
-          };
-          axios.post('https://crudcrud.com/api/037f3cf39e4049adba586fcb0216204d/bookingAppointments', formData)
-            .then(response => {
-              console.log(response.data);
-            })
-            .catch(error => {
-              console.log(error);
-            });
+    document.addEventListener('DOMContentLoaded', () => {
+  // Make a GET request to crudcrud.com to retrieve the user details
+      axios.get('https://crudcrud.com/api/037f3cf39e4049adba586fcb0216204d/bookingAppointments')
+        .then(response => {
+          const userDetails = response.data;
+          console.log('Retrieved user details:', userDetails);
 
-          //localStorage.setItem("user", JSON.stringify(formData));
-          displayData(formData);
+          // Update the HTML on the page with the retrieved user details
+          const nameElement = document.getElementById('name');
+          nameElement.textContent = userDetails.name;
+
+          const emailElement = document.getElementById('email');
+          emailElement.textContent = userDetails.email;
+
+          const phoneElement = document.getElementById('phone');
+          phoneElement.textContent = userDetails.phone;
+
+          const addressElement = document.getElementById('datetime');
+          addressElement.textContent = userDetails.address;
+        })
+        .catch(error => {
+          console.log(error);
         });
+    });
+
+    // document.querySelector('#booking-form').addEventListener('submit', (event) => {
+    //       event.preventDefault();
+    //       const formData = {
+    //         name: document.querySelector('#name').value,
+    //         email: document.querySelector('#email').value,
+    //         phone: document.querySelector('#phone').value,
+    //         time: document.querySelector('#time').value
+    //       };
+    //       axios.post('https://crudcrud.com/api/037f3cf39e4049adba586fcb0216204d/bookingAppointments', formData)
+    //         .then(response => {
+    //           console.log(response.data);
+              
+    //         })
+    //         .catch(error => {
+    //           console.log(error);
+    //         });
+
+    //       //localStorage.setItem("user", JSON.stringify(formData));
+    //       displayData(formData);
+    //     });
 
         function displayData(userData) {
             const previousDataContainer = document.querySelector('.container div');
